@@ -55,7 +55,8 @@
 
 // Main LESS-Code
 html {
-  font-family: sans-serif;
+  font-family: "Encode Sans Semi Expanded", "Noto Sans", Roboto, Helvetica, arial, sans-serif;
+  font-weight: 500;
   font-size: 0.9em;
   .text-size-adjust;
 
@@ -113,6 +114,7 @@ footer {
 input[type="submit"],
 #results button[type="submit"] {
   padding: 0.7rem;
+  font-weight: 500;
   display: inline-block;
   background: var(--color-btn-background);
   color: var(--color-btn-font);
@@ -173,13 +175,14 @@ article[data-vim-selected].category-social {
 
   h3 {
     font-size: 1.2rem;
+    line-height: 1.2rem;
     word-wrap: break-word;
     margin: 0.4rem 0 0.4rem 0;
     padding: 0;
 
     a {
       color: var(--color-result-link-font);
-      font-weight: normal;
+      font-weight: 600;
       font-size: 1.1em;
 
       &:visited {
@@ -203,6 +206,7 @@ article[data-vim-selected].category-social {
   .content,
   .stat {
     font-size: 0.9em;
+    font-weight: 400;
     margin: 0;
     padding: 0;
     max-width: 54em;
@@ -212,7 +216,7 @@ article[data-vim-selected].category-social {
     .highlight {
       color: var(--color-result-description-highlight-font);
       background: inherit;
-      font-weight: bold;
+      font-weight: 500;
     }
   }
 
@@ -408,10 +412,12 @@ article[data-vim-selected].category-social {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
+  margin-top: 5px;
   color: var(--color-result-engines-font);
 
   span {
     font-size: smaller;
+    font-weight: 400;
     margin-top: 0;
     margin-bottom: 0;
     .ltr-margin-right(0.5rem);

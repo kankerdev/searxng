@@ -6,18 +6,20 @@
 
 /// Light Theme
 :root {
+  --color-accent: #f65400;
   /// Base Colors
   --color-base-font: #444;
   --color-base-font-rgb: 68, 68, 68;
-  --color-base-background: #fff;
+  --color-base-background: #fafafa;
   --color-base-background-mobile: #f2f5f8;
-  --color-url-font: #334999;
-  --color-url-visited-font: #9822c3;
+  --color-url-font: var(--color-accent);
+  // --color-url-visited-font: #ce5200;
+  --color-url-visited-font: var(--color-accent);
   /// Header Colors
-  --color-header-background: #fdfbff;
+  --color-header-background: #fff;
   --color-header-border: #ddd;
   /// Footer Colors
-  --color-footer-background: #fdfbff;
+  --color-footer-background: #fff;
   --color-footer-border: #ddd;
   /// Sidebar Colors
   --color-sidebar-border: #ddd;
@@ -28,16 +30,16 @@
   --color-backtotop-border: #ddd;
   --color-backtotop-background: #fff;
   /// Button Colors
-  --color-btn-background: #3050ff;
+  --color-btn-background: var(--color-accent);
   --color-btn-font: #fff;
   --color-show-btn-background: #bbb;
-  --color-show-btn-font: #000;
+  --color-show-btn-font: #fff;
   /// Search Input Colors
   --color-search-border: #bbb;
   --color-search-shadow: 0 2px 8px rgb(34 38 46 / 25%);
   --color-search-background: #fff;
   --color-search-font: #222;
-  --color-search-background-hover: #3050ff;
+  --color-search-background-hover: var(--color-accent);
   /// Modal Colors
   --color-error: #db3434;
   --color-error-background: lighten(#db3434, 40%);
@@ -46,8 +48,8 @@
   --color-success: #42db34;
   --color-success-background: lighten(#42db34, 40%);
   /// Categories Colors
-  --color-categories-item-selected-font: #3050ff;
-  --color-categories-item-border-selected: #3050ff;
+  --color-categories-item-selected-font: var(--color-accent);
+  --color-categories-item-border-selected: var(--color-accent);
   /// Autocomplete Colors
   --color-autocomplete-font: #000;
   --color-autocomplete-border: #bbb;
@@ -60,12 +62,12 @@
   /// Results Colors
   --color-result-background: #fff;
   --color-result-border: #ddd;
-  --color-result-url-font: #000;
+  --color-result-url-font: #444;
   --color-result-vim-selected: #f7f7f7;
-  --color-result-vim-arrow: #000bbb;
+  --color-result-vim-arrow: var(--color-accent);
   --color-result-description-highlight-font: #000;
-  --color-result-link-font: #000bbb;
-  --color-result-link-font-highlight: #000bbb;
+  --color-result-link-font: #111;
+  --color-result-link-font-highlight: #000;
   --color-result-link-visited-font: #9822c3;
   --color-result-publishdate-font: #777;
   --color-result-engines-font: #545454;
@@ -102,13 +104,13 @@
   --color-toolkit-input-text-font: #222;
   --color-toolkit-checkbox-onoff-off-background: #ddd;
   --color-toolkit-checkbox-onoff-on-background: #ddd;
-  --color-toolkit-checkbox-onoff-on-mark-background: #3050ff;
+  --color-toolkit-checkbox-onoff-on-mark-background: var(--color-accent);
   --color-toolkit-checkbox-onoff-on-mark-color: #fff;
   --color-toolkit-checkbox-onoff-off-mark-background: #aaa;
   --color-toolkit-checkbox-onoff-off-mark-color: #fff;
   --color-toolkit-checkbox-label-background: #ddd;
   --color-toolkit-checkbox-label-border: #ddd;
-  --color-toolkit-checkbox-input-border: #3050ff;
+  --color-toolkit-checkbox-input-border: var(--color-accent);
   --color-toolkit-engine-tooltip-border: #ddd;
   --color-toolkit-engine-tooltip-background: #fff;
   --color-toolkit-loader-border: rgba(0, 0, 0, 0.2);
@@ -118,19 +120,21 @@
 }
 
 .dark-themes() {
+  --color-accent: #f65400;
+
   /// Base Colors
   --color-base-font: #bbb;
   --color-base-font-rgb: 187, 187, 187;
-  --color-base-background: #222428;
-  --color-base-background-mobile: #222428;
-  --color-url-font: #8af;
-  --color-url-visited-font: #c09cd9;
+  --color-base-background: #141414;
+  --color-base-background-mobile: var(--color-base-background);
+  --color-url-font: var(--color-accent);
+  --color-url-visited-font: var(--color-accent);
   /// Header Colors
-  --color-header-background: #1e1e22;
-  --color-header-border: #333;
+  --color-header-background: #181818;
+  --color-header-border: #252525;
   /// Footer Colors
-  --color-footer-background: #1e1e22;
-  --color-footer-border: #333;
+  --color-footer-background: #171717;
+  --color-footer-border: #232323;
   /// Sidebar Colors
   --color-sidebar-border: #555;
   --color-sidebar-font: #fff;
@@ -140,16 +144,16 @@
   --color-backtotop-border: #333;
   --color-backtotop-background: #2b2e36;
   /// Button Colors
-  --color-btn-background: #58f;
-  --color-btn-font: #222;
+  --color-btn-background: var(--color-accent);
+  --color-btn-font: #fff;
   --color-show-btn-background: #555;
   --color-show-btn-font: #fff;
   /// Search Input Colors
-  --color-search-border: #555;
-  --color-search-shadow: 0 2px 8px rgb(34 38 46 / 25%);
-  --color-search-background: #2b2e36;
+  --color-search-border: #666;
+  --color-search-shadow: 0 2px 8px rgb(21 21 21 / 25%);
+  --color-search-background: #232323;
   --color-search-font: #fff;
-  --color-search-background-hover: #58f;
+  --color-search-background-hover: var(--color-accent);
   /// Modal Colors
   --color-error: #f55b5b;
   --color-error-background: darken(#db3434, 40%);
@@ -158,27 +162,26 @@
   --color-success: #79f56e;
   --color-success-background: darken(#42db34, 40%);
   /// Categories Colors
-  --color-categories-item-selected-font: #58f;
-  --color-categories-item-border-selected: #58f;
+  --color-categories-item-selected-font: var(--color-accent);
+  --color-categories-item-border-selected: var(--color-accent);
   /// Autocomplete Colors
   --color-autocomplete-font: #fff;
   --color-autocomplete-border: #555;
-  --color-autocomplete-shadow: 0 2px 8px rgb(34 38 46 / 25%);
-  --color-autocomplete-background: #2b2e36;
-  --color-autocomplete-background-hover: #1e1e22;
+  --color-autocomplete-shadow: var(--color-search-shadow);
+  --color-autocomplete-background: var(--color-search-background);
+  --color-autocomplete-background-hover: #323232;
   /// Answer Colors
   --color-answer-font: #bbb; // same as --color-base-font
   --color-answer-background: #26292f;
   /// Results Colors
   --color-result-background: #26292f;
   --color-result-border: #333;
-  --color-result-url-font: #fff;
+  --color-result-url-font: #999;
   --color-result-vim-selected: #1f1f23cc;
-  --color-result-vim-arrow: #8af;
-  --color-result-description-highlight-font: #fff;
-  --color-result-link-font: #8af;
-  --color-result-link-font-highlight: #8af;
-  --color-result-link-visited-font: #c09cd9;
+  --color-result-vim-arrow: var(--color-accent);
+  --color-result-description-highlight-font: #dfdfdf;
+  --color-result-link-font: #fefefe;
+  --color-result-link-font-highlight: #fff;
   --color-result-publishdate-font: #888;
   --color-result-engines-font: #a4a4a4;
   --color-result-search-url-border: #555;
@@ -199,22 +202,23 @@
   --color-settings-tr-hover: #2c2c32;
   --color-settings-engine-description-font: darken(#dcdcdc, 30%);
   --color-settings-table-group-background: #1b1b21;
+  --color-settings-return-font: var(--color-btn-backround);
   /// Toolkit Colors
   --color-toolkit-badge-font: #fff;
   --color-toolkit-badge-background: #555;
   --color-toolkit-kbd-font: #000;
   --color-toolkit-kbd-background: #fff;
   --color-toolkit-dialog-border: #555;
-  --color-toolkit-dialog-background: #1e1e22;
+  --color-toolkit-dialog-background: #1e1e1e;
   --color-toolkit-tabs-label-border: #222;
   --color-toolkit-tabs-section-border: #555;
-  --color-toolkit-select-background: #313338;
+  --color-toolkit-select-background: #313131;
   --color-toolkit-select-border: #555;
-  --color-toolkit-select-background-hover: #373b49;
+  --color-toolkit-select-background-hover: #373737;
   --color-toolkit-input-text-font: #fff;
-  --color-toolkit-checkbox-onoff-off-background: #313338;
-  --color-toolkit-checkbox-onoff-on-background: #313338;
-  --color-toolkit-checkbox-onoff-on-mark-background: #58f;
+  --color-toolkit-checkbox-onoff-off-background: #313131;
+  --color-toolkit-checkbox-onoff-on-background: #313131;
+  --color-toolkit-checkbox-onoff-on-mark-background: var(--color-accent);
   --color-toolkit-checkbox-onoff-on-mark-color: #222;
   --color-toolkit-checkbox-onoff-off-mark-background: #ddd;
   --color-toolkit-checkbox-onoff-off-mark-color: #222;
