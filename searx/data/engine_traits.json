@@ -47,6 +47,7 @@
       "es": "es",
       "fa": "fa",
       "fr": "fr",
+      "ga": "ga",
       "he": "he",
       "hi": "hi",
       "hr": "hr",
@@ -57,15 +58,16 @@
       "jv": "jv",
       "kk": "kk",
       "ko": "ko",
+      "lb": "lb",
       "lt": "lt",
       "lv": "lv",
-      "mn": "mn",
       "nl": "nl",
       "no": "no",
       "pl": "pl",
       "pt": "pt",
       "ro": "ro",
       "ru": "ru",
+      "rw": "rw",
       "sr": "sr",
       "sv": "sv",
       "ta": "ta",
@@ -2390,7 +2392,7 @@
       "zh-TW": "tw-tzh"
     }
   },
-  "duckduckgo videos": {
+  "duckduckgo news": {
     "all_locale": "wt-wt",
     "custom": {
       "lang_region": {
@@ -2554,7 +2556,7 @@
       "zh-TW": "tw-tzh"
     }
   },
-  "duckduckgo news": {
+  "duckduckgo videos": {
     "all_locale": "wt-wt",
     "custom": {
       "lang_region": {
@@ -5967,6 +5969,7 @@
         "fiu-vro",
         "fj",
         "fo",
+        "fon",
         "fr",
         "frp",
         "frr",
@@ -6022,6 +6025,7 @@
         "kbd",
         "kbp",
         "kcg",
+        "kg",
         "ki",
         "kk",
         "kl",

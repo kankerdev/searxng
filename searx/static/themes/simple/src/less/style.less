@@ -96,6 +96,7 @@ footer {
   clear: both;
   min-height: 4rem;
   padding: 1rem 0;
+  padding-bottom: 1.25rem !important;
   width: 100%;
   text-align: center;
   background-color: var(--color-footer-background);
@@ -104,6 +105,15 @@ footer {
 
   p {
     font-size: 0.9em;
+    line-height: 1.4;
+  }
+
+  a,
+  a:link,
+  a:hover,
+  a:visited,
+  a:active {
+    color: var(--color-url-font);
   }
 }
 
@@ -128,8 +138,12 @@ a {
   text-decoration: none;
   color: var(--color-url-font);
 
+  &:hover {
+    text-decoration: underline;
+  }
+
   &:visited {
-    color: var(--color-url-visited-font);
+    // color: var(--color-url-visited-font);
 
     .highlight {
       color: var(--color-url-visited-font);
@@ -175,7 +189,7 @@ article[data-vim-selected].category-social {
 
   h3 {
     font-size: 1.2rem;
-    line-height: 1.2rem;
+    line-height: 1.2;
     word-wrap: break-word;
     margin: 0.4rem 0 0.4rem 0;
     padding: 0;
@@ -243,6 +257,10 @@ article[data-vim-selected].category-social {
     flex-direction: row;
     margin: 0;
     padding: 0;
+
+    a:hover {
+      text-decoration: none;
+    }
 
     .url_o1 {
       white-space: nowrap;
