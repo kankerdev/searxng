@@ -16,7 +16,7 @@ jobs:
       - name: GitHub Sync to Upstream Repository
         uses: dabreadman/sync-upstream-repo@v1.3.0
         with: 
-          token: ${{ secrets.WORKFLOW_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           upstream_repo: https://github.com/searxng/searxng.git
           upstream_branch: master
           downstream_branch: master
