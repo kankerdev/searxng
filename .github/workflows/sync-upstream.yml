@@ -19,7 +19,7 @@ jobs:
           ref: main
 
       - name: GitHub Sync to Upstream Repository
-        uses: dabreadman/sync-upstream-repo@v1.1.0.b
+        uses: dabreadman/sync-upstream-repo@v1.2.0.b
         with: 
           token: ${{ secrets.WORKFLOW_TOKEN }}
           upstream_repo: https://github.com/searxng/searxng.git
