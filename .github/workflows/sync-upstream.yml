@@ -13,13 +13,8 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout HEAD
-        uses: actions/checkout@v2
-        with:
-          ref: main
-
       - name: GitHub Sync to Upstream Repository
-        uses: dabreadman/sync-upstream-repo@v1.2.0.b
+        uses: dabreadman/sync-upstream-repo@v1.3.0
         with: 
           token: ${{ secrets.WORKFLOW_TOKEN }}
           upstream_repo: https://github.com/searxng/searxng.git
