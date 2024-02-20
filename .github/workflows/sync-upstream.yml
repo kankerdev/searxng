@@ -1,4 +1,3 @@
-# https://github.com/marketplace/actions/sync-and-merge-upstream-repository-with-your-current-repository
 name: Sync Upstream
 
 on:
@@ -8,15 +7,28 @@ on:
 
 jobs:
   sync:
-    name: Sync Upstream
-    permissions:
+    permissions: 
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - name: GitHub Sync to Upstream Repository
-        uses: dabreadman/sync-upstream-repo@v1.3.0
-        with: 
-          token: ${{ secrets.GITHUB_TOKEN }}
-          upstream_repo: https://github.com/searxng/searxng.git
-          upstream_branch: master
-          downstream_branch: master
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: git config user.name "github-actions[bot]" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - run: git remote add upstream https://github.com/searxng/searxng && git fetch --all
+      - run: git merge -X theirs upstream/master -m "Sync upstream"
+      - run: sudo ./utils/searxng.sh install buildhost
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          architecture: 'x64'
+      - id: cache-python
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./local
+            ./.nvm
+            ./node_modules
+          key: python-ubuntu-20.04-3.9-${{ hashFiles('requirements*.txt', 'setup.py','.nvmrc', 'package.json') }}
+      - run: make V=1 node.env && make V=1 themes.all
+      - run: git commit -am "[build] /static" && git push
