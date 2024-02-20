@@ -32,13 +32,3 @@ jobs:
           key: python-ubuntu-20.04-3.9-${{ hashFiles('requirements*.txt', 'setup.py','.nvmrc', 'package.json') }}
       - run: make V=1 node.env && make V=1 themes.all
       - run: git commit -am "[build] /static" && git push
-
-  ci:
-    runs-on: ubuntu-latest
-    needs: [ sync ]
-    steps:
-      - run: |
-          curl -X POST https://api.github.com/repos/kankerdev/searxng/dispatches \
-            -H 'Accept: application/vnd.github.everest-preview+json' \
-            -u ${{ secrets.WORKFLOW_TRIGGER_TOKEN }} \
-            --data '{"event_type": "integration", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
