@@ -29,13 +29,13 @@ jobs:
         sudo ./utils/searxng.sh install packages
         sudo apt install firefox
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
         architecture: 'x64'
     - name: Cache Python dependencies
       id: cache-python
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ./local
@@ -52,7 +52,7 @@ jobs:
     - name: Test coverage
       run: make V=1 test.coverage
     - name: Store coverage result
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-${{ matrix.python-version }}
         path: coverage/
@@ -67,13 +67,13 @@ jobs:
     - name: Install Ubuntu packages
       run: sudo ./utils/searxng.sh install buildhost
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.9'
         architecture: 'x64'
     - name: Cache Python dependencies
       id: cache-python
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ./local
@@ -99,13 +99,13 @@ jobs:
   #   - name: Install Ubuntu packages
   #     run: sudo ./utils/searxng.sh install buildhost
   #   - name: Set up Python
-  #     uses: actions/setup-python@v4
+  #     uses: actions/setup-python@v5
   #     with:
   #       python-version: '3.9'
   #       architecture: 'x64'
   #   - name: Cache Python dependencies
   #     id: cache-python
-  #     uses: actions/cache@v3
+  #     uses: actions/cache@v4
   #     with:
   #       path: |
   #         ./local
@@ -143,13 +143,13 @@ jobs:
           # make sure "make docker.push" can get the git history
           fetch-depth: '0'
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.9'
           architecture: 'x64'
       - name: Cache Python dependencies
         id: cache-python
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ./local

@@ -1,28 +1,40 @@
 name: Sync Upstream
 
 on:
-  schedule:
-    - cron: '0 0,12 * * 1,3,5,0'
+  schedule: [ cron: '0 0,12 * * 1,3,5,0' ]
   workflow_dispatch:
 
+permissions: 
+  contents: write
+  
 jobs:
   sync:
-    permissions: 
-      contents: write
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - run: git config user.name "github-actions[bot]" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      - run: git remote add upstream https://github.com/searxng/searxng && git fetch --all
-      - run: git merge -X theirs upstream/master -m "Sync upstream"
-      - run: sudo ./utils/searxng.sh install buildhost
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-          architecture: 'x64'
-      - id: cache-python
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      
+      - name: Tell Git who we are
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream repo as a remote & merge upstream changes preferring theirs
+        run: |
+          git remote add upstream https://github.com/searxng/searxng 
+          git fetch upstream
+          git merge -X theirs upstream/master -m "Sync upstream"
+
+      - name: Install Ubuntu packages
+        run: sudo ./utils/searxng.sh install buildhost
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with: { python-version: '3.9', architecture: 'x64' }
+
+      - name: Cache Python dependencies
+        id: cache-python
         uses: actions/cache@v3
         with:
           path: |
@@ -30,5 +42,13 @@ jobs:
             ./.nvm
             ./node_modules
           key: python-ubuntu-20.04-3.9-${{ hashFiles('requirements*.txt', 'setup.py','.nvmrc', 'package.json') }}
-      - run: make V=1 node.env && make V=1 themes.all
-      - run: git commit -am "[build] /static" && git push
+
+      - name: Install node dependencies & rebuild themes with our changes
+        run: |
+          make V=1 node.env 
+          make V=1 themes.all
+      
+      - name: Push their changes combined with ours
+        run: |
+          git commit -am "[build] /static" 
+          git push
