@@ -49,7 +49,9 @@ jobs:
       
       - name: Push their changes combined with ours
         run: |
+          git add --all
           git commit -am "[build] /static" 
+          git status
           git push
 
   docker:
