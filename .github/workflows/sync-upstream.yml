@@ -22,7 +22,7 @@ jobs:
       - name: Add upstream repo as a remote & merge upstream changes preferring theirs
         run: |
           git remote add upstream https://github.com/searxng/searxng 
-          git fetch upstream
+          git fetch --all
           git merge -X theirs upstream/master -m "Sync upstream"
 
       - name: Install Ubuntu packages
@@ -49,7 +49,6 @@ jobs:
       
       - name: Push their changes combined with ours
         run: |
-          git add --all
           git commit -am "[build] /static" 
           git status
           git push
