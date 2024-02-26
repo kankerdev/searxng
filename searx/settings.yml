@@ -192,7 +192,7 @@ outgoing:
   #
   # Extra seconds to add in order to account for the time taken by the proxy
   #
-  #  extra_proxy_timeout: 10.0
+  #  extra_proxy_timeout: 10
   #
   # uncomment below section only if you have more than one network interface
   # which can be the source of outgoing search requests
@@ -1158,6 +1158,17 @@ engines:
   #   collection: 'reviews'  # name of the db collection
   #   key: 'name'  # key in the collection to search for
 
+  - name: mozhi
+    engine: mozhi
+    base_url:
+      - https://mozhi.aryak.me
+      - https://translate.bus-hit.me
+      - https://nyc1.mz.ggtyler.dev
+    # mozhi_engine: google - see https://mozhi.aryak.me for supported engines
+    timeout: 4.0
+    shortcut: mz
+    disabled: true
+
   - name: mwmbl
     engine: mwmbl
     # api_url: https://api.mwmbl.org
@@ -1344,6 +1355,31 @@ engines:
     # country
     url: https://thepiratebay.org/
     timeout: 3.0
+
+  - name: pixiv
+    shortcut: pv
+    engine: pixiv
+    disabled: true
+    inactive: true
+    pixiv_image_proxies:
+      - pximg.example.org
+      # A proxy is required to load the images. Hosting an image proxy server
+      # for Pixiv:
+      #    --> https://codeberg.org/VnPower/PixivFE/wiki/Hosting-an-image-proxy-server-for-Pixiv
+      # Proxies from public instances.  Ask the public instances owners if they
+      # agree to receive traffic from SearXNG!
+      #    --> https://codeberg.org/VnPower/PixivFE#instances
+      #    --> https://github.com/searxng/searxng/pull/3192#issuecomment-1941095047
+      # image proxy of https://pixiv.cat
+      # - https://i.pixiv.cat
+      # image proxy of https://www.pixiv.pics
+      # - https://pximg.cocomi.eu.org
+      # image proxy of https://pixivfe.exozy.me
+      # - https://pximg.exozy.me
+      # image proxy of https://pixivfe.ducks.party
+      # - https://pixiv.ducks.party
+      # image proxy of https://pixiv.perennialte.ch
+      # - https://pximg.perennialte.ch
 
   - name: podcastindex
     engine: podcastindex
@@ -1707,6 +1743,13 @@ engines:
   - name: unsplash
     engine: unsplash
     shortcut: us
+
+  - name: yandex music
+    engine: yandex_music
+    shortcut: ydm
+    disabled: true
+    # https://yandex.com/support/music/access.html
+    inactive: true
 
   - name: yahoo
     engine: yahoo
