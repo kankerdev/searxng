@@ -51,7 +51,7 @@ jobs:
         run: |
           git commit -am "[build] /static" 
           git status
-          git push
+          git push origin master
 
   docker:
     name: Update docker image
