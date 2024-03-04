@@ -19,11 +19,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Add upstream repo as a remote & merge upstream changes preferring theirs
-        run: |
-          git remote add upstream https://github.com/searxng/searxng 
-          git fetch --all
-          git merge -X theirs upstream/master -m "Sync upstream"
+      - name: Add upstream repo as a remote
+        run: git remote add upstream https://github.com/searxng/searxng 
+
+      - name: Fetch upstream repo's changes
+        run: git fetch --all # I'm lazy
+
+      - name: Merge their changes with ours
+        run: git merge -X theirs upstream/master -m "Sync upstream"
 
       - name: Install Ubuntu packages
         run: sudo ./utils/searxng.sh install buildhost
@@ -32,8 +35,11 @@ jobs:
         uses: actions/setup-python@v5
         with: { python-version: '3.9', architecture: 'x64' }
 
-      - name: Cache Python dependencies
-        id: cache-python
+      - name: Install node dependencies & rebuild themes with our changes
+        run: make V=1 node.env 
+        
+      - name: Cache Python and Node dependencies
+        id: cache
         uses: actions/cache@v4
         with:
           path: |
@@ -42,17 +48,16 @@ jobs:
             ./node_modules
           key: python-ubuntu-20.04-3.9-${{ hashFiles('requirements*.txt', 'setup.py','.nvmrc', 'package.json') }}
 
-      - name: Install node dependencies & rebuild themes with our changes
-        run: |
-          make V=1 node.env 
-          make V=1 themes.all
-      
+      - name: Rebuild themes with our changes
+        run: make V=1 themes.all
+
+      - name: Commit our changes
+        run: git commit -am "[build] /static" 
+
       - name: Push their changes combined with ours
         run: |
-          git branch -vv
-          git commit -am "[build] /static" 
           git status
-          git push origin master
+          git push -u origin master
 
   docker:
     name: Update docker image
