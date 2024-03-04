@@ -49,6 +49,7 @@ jobs:
       
       - name: Push their changes combined with ours
         run: |
+          git branch -vv
           git commit -am "[build] /static" 
           git status
           git push origin master
