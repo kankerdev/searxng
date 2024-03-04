@@ -54,8 +54,9 @@ jobs:
       - name: Commit our changes
         run: git commit -am "[build] /static" 
 
+      # This should always run except if the workflow is canceled
       - name: Push their changes combined with ours
-        if: always()
+        if: '!cancelled()' # Quotes are needed so that !cancelled() is not interpreted as a YAML tag.
         run: |
           git status
           git push -u origin master
