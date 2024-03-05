@@ -7,7 +7,7 @@ on:
 jobs:
   update:
     name: Update the repo's code with changes from upstream
-    permissions: { contents: write }
+    permissions: { contents: write } # Granting permission to write to the contents of the repository (including workflow files)
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
