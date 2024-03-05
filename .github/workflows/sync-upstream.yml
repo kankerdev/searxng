@@ -28,8 +28,24 @@ jobs:
       - name: Merge their changes with ours
         run: git merge -X theirs upstream/master -m "Sync upstream"
 
+      - name: Cache apt packages
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          key: apt-packages-ubuntu-20.04
+
       - name: Install Ubuntu packages
         run: sudo ./utils/searxng.sh install buildhost
+
+      - name: Cache Python and Node dependencies (before installation)
+        id: cache-before
+        uses: actions/cache@v4
+        with:
+          path: |
+            ./local
+            ./.nvm
+            ./node_modules
+          key: python-node-ubuntu-20.04-3.9-${{ hashFiles('requirements*.txt', 'setup.py','.nvmrc', 'package.json') }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -38,15 +54,15 @@ jobs:
       - name: Install Node dependencies
         run: make V=1 node.env 
         
-      - name: Cache Python and Node dependencies
-        id: cache
+      - name: Cache Python and Node dependencies (after installation)
+        id: cache-after
         uses: actions/cache@v4
         with:
           path: |
             ./local
             ./.nvm
             ./node_modules
-          key: python-ubuntu-20.04-3.9-${{ hashFiles('requirements*.txt', 'setup.py','.nvmrc', 'package.json') }}
+          key: python-node-ubuntu-20.04-3.9-${{ steps.cache-before.outputs.cache-hit }}-${{ hashFiles('requirements*.txt', 'setup.py','.nvmrc', 'package.json') }}
 
       - name: Rebuild themes with our changes
         run: make V=1 themes.all
