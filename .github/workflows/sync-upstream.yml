@@ -7,72 +7,88 @@ on:
 jobs:
   update:
     name: Update the repo's code with changes from upstream
-    permissions: { contents: write } # Granting permission to write to the contents of the repository (including workflow files)
     runs-on: ubuntu-20.04
+    permissions: { contents: write } # Granting permission to write to the contents of the repository
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with: { fetch-depth: 0 } # Git will fail the merge without history
-      
+
       - name: Tell Git who we are
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Add upstream repo as a remote
-        run: git remote add upstream https://github.com/searxng/searxng 
-
-      - name: Fetch upstream repo's changes
-        run: git fetch --all # I'm lazy
+      - name: Add upstream repo as a remote and fetch changes
+        run: |
+          git remote add upstream https://github.com/searxng/searxng
+          git fetch upstream
 
       - name: Merge their changes with ours
         run: git merge -X theirs upstream/master -m "Sync upstream"
 
-      - name: Cache apt packages
-        uses: actions/cache@v4
+      - name: Setup caching for Apt packages
+        uses: actions/cache/restore@v4
+        id: apt-cache
         with:
           path: /var/cache/apt/archives
-          key: apt-packages-ubuntu-20.04
+          key: apt-cache-${{ runner.os }}
 
-      - name: Install Ubuntu packages
+      - name: Install Apt packages
         run: sudo ./utils/searxng.sh install buildhost
 
-      - name: Cache Python and Node dependencies (before installation)
-        id: cache-before
-        uses: actions/cache@v4
+      - name: Save Apt packages cache
+        uses: actions/cache/save@v4
         with:
-          path: |
-            ./local
-            ./.nvm
-            ./node_modules
-          key: python-node-ubuntu-20.04-3.9-${{ hashFiles('requirements*.txt', 'setup.py','.nvmrc', 'package.json') }}
+          path: /var/cache/apt/archives
+          key: ${{ steps.apt-cache.outputs.cache-primary-key }}
 
+      - name: Setup caching for Python packages
+        uses: actions/cache/restore@v4
+        id: python-cache
+        with:
+          path: ./local
+          key: python-cache-${{ runner.os }}-${{ hashFiles('requirements*.txt', 'setup.py') }}
+          
       - name: Set up Python
+        if: steps.python-cache.outputs.cache-hit != 'true'
         uses: actions/setup-python@v5
-        with: { python-version: '3.9', architecture: 'x64' }
+        with: { python-version: '3.9', architecture: 'x64'}
 
-      - name: Install Node dependencies
-        run: make V=1 node.env 
-        
-      - name: Cache Python and Node dependencies (after installation)
-        id: cache-after
-        uses: actions/cache@v4
+      - name: Save Python packages cache
+        uses: actions/cache/save@v4
+        with:
+          path: ./local
+          key: ${{ steps.python-cache.outputs.cache-primary-key }}
+
+      - name: Setup caching for Node packages
+        uses: actions/cache/restore@v4
+        id: node-cache
         with:
           path: |
             ./local
             ./.nvm
-            ./node_modules
-          key: python-node-ubuntu-20.04-3.9-${{ steps.cache-before.outputs.cache-hit }}-${{ hashFiles('requirements*.txt', 'setup.py','.nvmrc', 'package.json') }}
+          key: node-cache-${{ runner.os }}-${{ hashFiles('.nvmrc', 'package.json') }}
+          
+      - name: Install Node dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: make V=1 node.env 
+
+      - name: Save Node packages cache
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ./local
+            ./.nvm
+          key: ${{ steps.node-cache.outputs.cache-primary-key }}
 
       - name: Rebuild themes with our changes
         run: make V=1 themes.all
 
       - name: Commit our changes
-        run: git commit -am "[build] /static" 
+        run: git commit -am "[build] /static" || true # If this fails, it would prevent non-theme changes to be pushed
 
-      # This should always run except if the workflow is canceled
       - name: Push their changes combined with ours
-        if: '!cancelled()' # Quotes are needed so that !cancelled() is not interpreted as a YAML tag.
         run: |
           git status
           git push -u origin master
@@ -87,19 +103,17 @@ jobs:
         uses: actions/checkout@v4
         with: { fetch-depth: 0 } # Make sure "make docker.push" can get the git history
 
+      - name: Setup caching for Python packages
+        uses: actions/cache/restore@v4
+        id: python-cache
+        with:
+          path: ./local
+          key: python-cache-${{ runner.os }}-${{ hashFiles('requirements*.txt', 'setup.py') }}
+          
       - name: Set up Python
+        if: steps.python-cache.outputs.cache-hit != 'true'
         uses: actions/setup-python@v5
         with: { python-version: '3.9', architecture: 'x64' }
-
-      - name: Cache Python dependencies
-        id: cache-python
-        uses: actions/cache@v4
-        with:
-          path: |
-            ./local
-            ./.nvm
-            ./node_modules
-          key: python-ubuntu-20.04-3.9-${{ hashFiles('requirements*.txt', 'setup.py','.nvmrc', 'package.json') }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
