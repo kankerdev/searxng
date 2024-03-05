@@ -32,7 +32,7 @@ jobs:
         id: apt-cache
         with:
           path: /var/cache/apt/archives
-          key: apt-cache-${{ runner.os }}
+          key: apt-cache-ubuntu-20.04
 
       - name: Install Apt packages
         run: sudo ./utils/searxng.sh install buildhost
@@ -48,7 +48,7 @@ jobs:
         id: python-cache
         with:
           path: ./local
-          key: python-cache-${{ runner.os }}-${{ hashFiles('requirements*.txt', 'setup.py') }}
+          key: python-cache-ubuntu-20.04-${{ hashFiles('requirements*.txt', 'setup.py') }}
           
       - name: Set up Python
         if: steps.python-cache.outputs.cache-hit != 'true'
@@ -68,7 +68,7 @@ jobs:
           path: |
             ./local
             ./.nvm
-          key: node-cache-${{ runner.os }}-${{ hashFiles('.nvmrc', 'package.json') }}
+          key: node-cache-ubuntu-20.04-${{ hashFiles('.nvmrc', 'package.json') }}
           
       - name: Install Node dependencies
         if: steps.node-cache.outputs.cache-hit != 'true'
@@ -108,7 +108,7 @@ jobs:
         id: python-cache
         with:
           path: ./local
-          key: python-cache-${{ runner.os }}-${{ hashFiles('requirements*.txt', 'setup.py') }}
+          key: python-cache-ubuntu-20.04-${{ hashFiles('requirements*.txt', 'setup.py') }}
           
       - name: Set up Python
         if: steps.python-cache.outputs.cache-hit != 'true'
