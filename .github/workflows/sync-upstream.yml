@@ -32,9 +32,10 @@ jobs:
         id: apt-cache
         with:
           path: /var/cache/apt/archives
-          key: apt-cache-ubuntu-20.04
+          key: apt-cache-ubuntu-20.04-${{ hashFiles('utils/searxng.sh')}}
 
       - name: Install Apt packages
+        if: steps.apt-cache.outputs.cache-hit != 'true'
         run: sudo ./utils/searxng.sh install buildhost
 
       - name: Save Apt packages cache
