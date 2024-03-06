@@ -9,6 +9,8 @@ jobs:
     name: Update the repo's code with changes from upstream
     runs-on: ubuntu-20.04
     permissions: { contents: write } # Granting permission to write to the contents of the repository
+    outputs:
+      final-ref: ${{ steps.channel.outputs.final_ref }} # For usage in later jobs
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -77,6 +79,10 @@ jobs:
           git status
           git push -u origin master
       
+      - name: Store final commit hash for later jobs
+        id: channel
+        run: echo "final_ref=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Save Apt packages cache
         uses: actions/cache/save@v4
         with:
@@ -105,7 +111,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with: { fetch-depth: 0 } # Make sure "make docker.push" can get the git history
+        with: 
+          fetch-depth: 0 # Make sure "make docker.push" can get the git history
+          ref: ${{ needs.update.outputs.final-ref }} # Checkout the final commit of previous job
 
       - name: Setup caching for Python packages
         uses: actions/cache/restore@v4
