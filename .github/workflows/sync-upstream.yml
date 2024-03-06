@@ -27,13 +27,6 @@ jobs:
       - name: Merge their changes with ours
         run: git merge -X theirs upstream/master -m "Sync upstream"
 
-      - name: Setup caching for Apt packages
-        uses: actions/cache/restore@v4
-        id: apt-cache
-        with:
-          path: /var/cache/apt/archives/
-          key: apt-cache-ubuntu-20.04-${{ hashFiles('utils/searxng.sh')}}
-
       - name: Setup caching for Python packages
         uses: actions/cache/restore@v4
         id: python-cache
@@ -73,12 +66,6 @@ jobs:
         run: |
           git status
           git push -u origin master
-
-      - name: Save Apt packages cache
-        uses: actions/cache/save@v4
-        with:
-          path: /var/cache/apt/archives
-          key: ${{ steps.apt-cache.outputs.cache-primary-key }}
 
       - name: Save Python packages cache
         uses: actions/cache/save@v4
