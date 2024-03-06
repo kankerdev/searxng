@@ -33,7 +33,7 @@ jobs:
         uses: actions/cache/restore@v4
         id: apt-cache
         with:
-          path: /var/cache/apt/archives
+          path: /var/cache/apt/archives/
           key: apt-cache-ubuntu-20.04-${{ hashFiles('utils/searxng.sh')}}
 
       - name: Setup caching for Python packages
@@ -53,11 +53,9 @@ jobs:
           key: node-cache-ubuntu-20.04-${{ hashFiles('.nvmrc', 'package.json') }}
 
       - name: Install Apt packages
-        if: steps.apt-cache.outputs.cache-hit != 'true'
         run: sudo ./utils/searxng.sh install buildhost
           
       - name: Set up Python
-        if: steps.python-cache.outputs.cache-hit != 'true'
         uses: actions/setup-python@v5
         with: { python-version: '3.9', architecture: 'x64'}
 
@@ -65,7 +63,6 @@ jobs:
         run: make V=1 install
           
       - name: Install Node dependencies
-        if: steps.node-cache.outputs.cache-hit != 'true'
         run: make V=1 node.env 
 
       - name: Rebuild themes with our changes
