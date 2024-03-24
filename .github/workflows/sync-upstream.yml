@@ -62,10 +62,6 @@ jobs:
       - name: Commit our changes
         run: make V=1 static.build.commit || true
 
-      - name: Commit remaining files when they exist? 
-        run: |
-          git add --all && git commit -m "This was somehow necessary, only god knows why..." || true 
-
       - name: Push their changes combined with ours
         run: |
           git status
