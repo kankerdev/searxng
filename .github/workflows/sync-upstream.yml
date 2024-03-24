@@ -60,7 +60,7 @@ jobs:
         run: make V=1 themes.all
 
       - name: Commit our changes
-        run: make V=1 static.build.commit
+        run: make V=1 static.build.commit || true
 
       - name: Commit remaining files when they exist? 
         run: |
