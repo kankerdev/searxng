@@ -59,6 +59,9 @@ jobs:
       - name: Rebuild themes with our changes
         run: make V=1 themes.all
 
+      - name: Seperate src from build products
+        run: make V=1 static.build.restore
+
       - name: Commit our changes
         run: make V=1 static.build.commit || true
 
